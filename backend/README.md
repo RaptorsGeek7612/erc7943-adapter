@@ -77,6 +77,39 @@ pnpm run test:adapter
 `pnpm run test` execute toute la suite T-REX (plus lent) ; `pnpm run test:adapter`
 cible uniquement `test/adapters/erc7943.test.ts`.
 
+## Deploiement sur Sepolia
+
+```bash
+cp .env.example .env   # renseigner DEPLOYER_PRIVATE_KEY (voir .env.example)
+pnpm exec hardhat run scripts/deploy-sepolia.ts --network sepolia
+```
+
+Le script `scripts/deploy-sepolia.ts` deploie une suite T-REX minimale (un seul
+compte cumule emetteur/agent) puis l'adaptateur par-dessus, et ecrit les
+adresses dans `deployments/<network>.json`. Aucun topic de claim n'est
+configure : `IdentityRegistry.isVerified` renvoie donc `true` des qu'une
+identite est enregistree (voir `IdentityRegistry.sol:176`).
+
+Le nonce est gere manuellement dans le script (une lecture au demarrage, puis
+un compteur local) : le RPC public par defaut
+(`ethereum-sepolia-rpc.publicnode.com`) repartit les requetes sur plusieurs
+noeuds sans session collante, et des lectures repetees de
+`eth_getTransactionCount("pending")` peuvent atterrir sur des noeuds pas
+encore synchronises entre eux, provoquant des collisions de nonce
+(`replacement transaction underpriced`).
+
+Deploiement de reference (2026-09-19) :
+
+| Contrat | Adresse |
+|---|---|
+| Adaptateur ERC-7943 | [`0x0EDf8DDcD22FF2CB92f8213852bd0eC30Ac23A21`](https://sepolia.etherscan.io/address/0x0EDf8DDcD22FF2CB92f8213852bd0eC30Ac23A21) |
+| Token ERC-3643 (T-REX Sepolia Demo, `TREXD`) | [`0xe43ca4B4100f82DB567BBb771C5DD70f4150d7c1`](https://sepolia.etherscan.io/address/0xe43ca4B4100f82DB567BBb771C5DD70f4150d7c1) |
+
+Le detail complet (registres, compliance, autorites) est dans
+[`deployments/sepolia.json`](./deployments/sepolia.json). Pour tester depuis
+le frontend, colle l'adresse de l'adaptateur dans la console (ou renseigne
+`NEXT_PUBLIC_DEFAULT_ADAPTER_ADDRESS` dans `frontend/.env.local`).
+
 ## interfaceId mesure
 
 Le contrat calcule `type(IERC7943).interfaceId` a partir de l'interface declaree

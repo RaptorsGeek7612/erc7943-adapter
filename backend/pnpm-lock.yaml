@@ -47,6 +47,9 @@ importers:
       '@xyrusworx/hardhat-solidity-json':
         specifier: ^1.0.2
         version: 1.0.2(hardhat@2.29.1(ts-node@10.9.2(@types/node@20.19.43)(typescript@5.9.3))(typescript@5.9.3))
+      dotenv:
+        specifier: ^18.0.1
+        version: 18.0.1
       eslint:
         specifier: ^8.39.0
         version: 8.57.1
@@ -1361,6 +1364,11 @@ packages:
   doctrine@3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
     engines: {node: '>=6.0.0'}
+
+  dotenv@18.0.1:
+    resolution: {integrity: sha512-0eR4m4D/jH5eaI3evo2ZqqMii5mrTCR12v12VChdie6O1gPHs7XAjzTep0CWc1Bd+oNx3vVfbi734dK4zghigw==}
+    engines: {node: '>=12'}
+    hasBin: true
 
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
@@ -4756,6 +4764,8 @@ snapshots:
   doctrine@3.0.0:
     dependencies:
       esutils: 2.0.3
+
+  dotenv@18.0.1: {}
 
   dunder-proto@1.0.1:
     dependencies:

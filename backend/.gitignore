@@ -15,6 +15,11 @@ flat/
 .idea/
 .vscode/
 
+# Secrets
+.env
+.env.*
+!.env.example
+
 # NPM
 gas-report
 /bin/
