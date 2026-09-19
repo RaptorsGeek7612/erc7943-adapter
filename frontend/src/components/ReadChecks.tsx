@@ -25,10 +25,10 @@ export function extractErrorMessage(error: unknown): string {
       const errorName = reverted.data?.errorName;
       if (errorName && CUSTOM_ERROR_MESSAGES[errorName]) return CUSTOM_ERROR_MESSAGES[errorName];
       if (reverted.reason) return reverted.reason;
-      return "Cette adresse ne répond pas comme l'adaptateur ERC-7943 attendu. Vérifie que c'est bien l'adresse du contrat (pas une adresse de wallet).";
+      return "Adresse invalide : ce n'est pas le contrat de l'adaptateur.";
     }
     if (error.walk((e) => e instanceof ContractFunctionZeroDataError)) {
-      return "Cette adresse ne répond pas comme l'adaptateur ERC-7943 attendu. Vérifie que c'est bien l'adresse du contrat (pas une adresse de wallet).";
+      return "Adresse invalide : ce n'est pas le contrat de l'adaptateur.";
     }
     return error.shortMessage || error.message || "Une erreur est survenue.";
   }
