@@ -96,24 +96,11 @@ export function ReadChecks({ adapterAddress }: { adapterAddress: string }) {
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-        <ResultCard
-          title="L'émetteur peut-il envoyer ce montant ?"
-          subtitle="canSend(from, 0, amount)"
-          state={canSend}
-        />
-        <ResultCard
-          title="Le destinataire peut-il le recevoir ?"
-          subtitle="canReceive(to, 0, amount)"
-          state={canReceive}
-        />
-        <ResultCard
-          title="Le transfert complet est-il autorisé ?"
-          subtitle="canTransfer(from, to, 0, amount)"
-          state={canTransfer}
-        />
+        <ResultCard title="L'émetteur peut-il envoyer ce montant ?" state={canSend} />
+        <ResultCard title="Le destinataire peut-il le recevoir ?" state={canReceive} />
+        <ResultCard title="Le transfert complet est-il autorisé ?" state={canTransfer} />
         <ResultCard
           title="Quantité gelée chez l'émetteur"
-          subtitle="getFrozenTokens(from, 0)"
           state={frozenFrom}
           format={(value) => value?.toString() ?? ""}
         />
@@ -124,12 +111,10 @@ export function ReadChecks({ adapterAddress }: { adapterAddress: string }) {
 
 function ResultCard<T>({
   title,
-  subtitle,
   state,
   format,
 }: {
   title: string;
-  subtitle: string;
   state: { data: T | undefined; isFetching: boolean; isError: boolean; error: unknown };
   format?: (value: T | undefined) => string;
 }) {
@@ -154,7 +139,6 @@ function ResultCard<T>({
   return (
     <div className="rounded-lg border border-zinc-200 p-3 dark:border-zinc-800">
       <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200">{title}</p>
-      <p className="mt-0.5 font-mono text-[11px] text-zinc-400">{subtitle}</p>
       <p className={`mt-1.5 truncate text-sm font-semibold ${tone}`}>{body}</p>
     </div>
   );

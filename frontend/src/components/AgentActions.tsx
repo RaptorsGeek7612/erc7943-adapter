@@ -87,7 +87,6 @@ function SetFrozenTokensForm({ adapterAddress }: { adapterAddress: Address }) {
       }}
     >
       <h3 className="text-sm font-semibold">Geler une quantité de tokens</h3>
-      <p className="font-mono text-[11px] text-zinc-400">setFrozenTokens(user, 0, amount)</p>
       <p className="text-xs text-zinc-500">
         Fixe la quantite gelee cible (ecrase). L&apos;adaptateur traduit en gel/degel incremental cote
         token.
@@ -144,7 +143,6 @@ function ForcedTransferForm({ adapterAddress }: { adapterAddress: Address }) {
       }}
     >
       <h3 className="text-sm font-semibold">Forcer un transfert</h3>
-      <p className="font-mono text-[11px] text-zinc-400">forcedTransfer(from, to, 0, amount)</p>
       <p className="text-xs text-zinc-500">
         Transfert execute sans le consentement du porteur. Reserve a une autorite habilitee.
       </p>
