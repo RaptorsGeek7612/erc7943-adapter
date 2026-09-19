@@ -1,6 +1,14 @@
 packages:
   - "."
 
+# cuer@0.0.3 (rendu QR de RainbowKit) declare une plage "~0" bien trop
+# permissive pour son dependance a "qr" (pre-1.0). qr@0.6+ a ajoute une
+# validation stricte qui rejette border=0, exactement ce que cuer envoie,
+# faisant planter la page a l'ouverture de la modale WalletConnect.
+# On fige a la version en cours quand cuer@0.0.3 a ete publie (2025-08-26).
+overrides:
+  qr: 0.5.1
+
 allowBuilds:
   bufferutil: false
   keccak: false
