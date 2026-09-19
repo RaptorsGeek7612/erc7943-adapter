@@ -79,6 +79,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # backend/foundry.toml existe (scope Foundry sur contracts/adapters,
+      # cf. audit) : crytic-compile detecte et lit la config Foundry pour ce
+      # fichier meme en forcant "solc" comme framework de compilation, donc
+      # `forge` doit etre present en PATH.
+      - uses: foundry-rs/foundry-toolchain@v1
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -87,4 +93,4 @@ jobs:
         run: pip install slither-analyzer
 
       - name: Slither (adaptateur uniquement)
-        run: slither contracts/adapters/ERC7943Adapter.sol
+        run: slither contracts/adapters/ERC7943Adapter.sol --compile-force-framework solc
