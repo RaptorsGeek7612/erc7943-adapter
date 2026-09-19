@@ -77,14 +77,14 @@ export function AdapterOverview({ adapterAddress }: { adapterAddress: string }) 
             : "…"
         }
       />
-      <Row label="interfaceId ERC-7943 (calcule)" value={interfaceId ?? "…"} mono />
+      <Row label="Identifiant d'interface ERC-7943 (calculé)" value={interfaceId ?? "…"} mono />
       <Row
-        label="supportsInterface(ERC-7943)"
+        label="Compatible ERC-7943"
         value={supportsErc7943 === undefined ? "…" : supportsErc7943 ? "true" : "false"}
         tone={supportsErc7943 === false ? "warn" : "ok"}
       />
       <Row
-        label="supportsInterface(ERC-165)"
+        label="Compatible ERC-165"
         value={supportsErc165 === undefined ? "…" : supportsErc165 ? "true" : "false"}
         tone={supportsErc165 === false ? "warn" : "ok"}
       />

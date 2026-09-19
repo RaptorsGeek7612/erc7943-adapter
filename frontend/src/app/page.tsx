@@ -52,7 +52,7 @@ export default function Home() {
         <section className="rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-950">
           <h2 className="mb-3 text-sm font-semibold text-zinc-900 dark:text-zinc-50">Adaptateur cible</h2>
           <AddressField
-            label="Adresse du contrat ERC7943Adapter"
+            label="Adresse du contrat de l'adaptateur"
             value={adapterAddress}
             onChange={setAdapterAddress}
           />
@@ -80,7 +80,7 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-zinc-200 px-6 py-4 text-center text-xs text-zinc-500 dark:border-zinc-800">
-        ERC-7943 est un brouillon au stade Review — verifie l&apos;interfaceId affiche contre{" "}
+        ERC-7943 est un brouillon au stade Review — verifie l&apos;identifiant d&apos;interface affiche contre{" "}
         <a
           className="underline"
           href="https://eips.ethereum.org/EIPS/eip-7943"

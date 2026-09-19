@@ -78,8 +78,8 @@ export function ReadChecks({ adapterAddress }: { adapterAddress: string }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <AddressField label="Emetteur (from)" value={from} onChange={setFrom} />
-        <AddressField label="Destinataire (to)" value={to} onChange={setTo} />
+        <AddressField label="Émetteur" value={from} onChange={setFrom} />
+        <AddressField label="Destinataire" value={to} onChange={setTo} />
         <label className="flex flex-col gap-1 text-sm">
           <span className="font-medium text-zinc-700 dark:text-zinc-300">Montant</span>
           <input
