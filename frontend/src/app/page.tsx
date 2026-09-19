@@ -46,7 +46,7 @@ export default function Home() {
         <ConnectButton />
       </header>
 
-      <p className="px-6 pb-2 text-sm text-parchment sm:px-10">
+      <p className="font-display px-6 pb-3 text-base italic tracking-wide text-parchment sm:px-10">
         Console d&apos;inspection pour un token ERC-3643 exposé via ERC-7943
       </p>
 
