@@ -49,7 +49,7 @@ export default function Home() {
       </header>
 
       <p className="font-display px-6 pb-3 text-base italic tracking-wide text-parchment sm:px-10">
-        Console d&apos;inspection pour un token ERC-3643 exposé via ERC-7943
+        Console d&apos;inspection pour un token ERC3643 exposé via ERC7943
       </p>
 
       <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 px-6 py-8 sm:px-10">
@@ -77,14 +77,14 @@ export default function Home() {
         <section className="plaque animate-card-rise p-6" style={{ animationDelay: "240ms" }}>
           <h2 className="font-display text-lg font-semibold text-ivory">Actions d&apos;agent</h2>
           <p className="mb-4 text-xs text-parchment">
-            Nécessitent que ce contrat adaptateur porte le rôle d&apos;agent sur le token ERC-3643.
+            Nécessitent que ce contrat adaptateur porte le rôle d&apos;agent sur le token ERC3643.
           </p>
           <AgentActions adapterAddress={adapterAddress} />
         </section>
       </main>
 
       <footer className="px-6 py-8 text-center text-xs text-parchment sm:px-10">
-        ERC-7943 est un brouillon au stade Review. Vérifie l&apos;identifiant d&apos;interface affiché contre{" "}
+        ERC7943 est un brouillon au stade Review. Vérifie l&apos;identifiant d&apos;interface affiché contre{" "}
         <a
           className="text-gold underline decoration-gold/40 underline-offset-2 transition-colors hover:text-gold-bright"
           href="https://eips.ethereum.org/EIPS/eip-7943"

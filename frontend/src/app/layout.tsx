@@ -21,8 +21,8 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Adaptateur ERC-7943",
-  description: "Console d'inspection et d'administration d'un adaptateur ERC-7943 pour token ERC-3643.",
+  title: "Adaptateur ERC7943",
+  description: "Console d'inspection et d'administration d'un adaptateur ERC7943 pour token ERC3643.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -81,7 +81,7 @@ export function AdapterOverview({ adapterAddress }: { adapterAddress: string }) 
 
   return (
     <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
-      <Row label="Token ERC-3643 sous-jacent" value={tokenAddress ?? "…"} mono />
+      <Row label="Token ERC3643 sous-jacent" value={tokenAddress ?? "…"} mono />
       <Row
         label="Token (nom / symbole / decimales)"
         value={
@@ -90,14 +90,14 @@ export function AdapterOverview({ adapterAddress }: { adapterAddress: string }) 
             : "…"
         }
       />
-      <Row label="Identifiant d'interface ERC-7943 (calculé)" value={interfaceId ?? "…"} mono />
+      <Row label="Identifiant d'interface ERC7943 (calculé)" value={interfaceId ?? "…"} mono />
       <Row
-        label="Compatible ERC-7943"
+        label="Compatible ERC7943"
         value={supportsErc7943 === undefined ? "…" : supportsErc7943 ? "Oui" : "Non"}
         tone={supportsErc7943 === false ? "warn" : "ok"}
       />
       <Row
-        label="Compatible ERC-165"
+        label="Compatible ERC165"
         value={supportsErc165 === undefined ? "…" : supportsErc165 ? "Oui" : "Non"}
         tone={supportsErc165 === false ? "warn" : "ok"}
       />
