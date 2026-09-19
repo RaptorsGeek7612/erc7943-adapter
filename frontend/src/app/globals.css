@@ -173,8 +173,19 @@ body {
     color-mix(in srgb, var(--color-ink-2) 88%, transparent);
   box-shadow:
     0 1px 0 0 color-mix(in srgb, var(--color-ivory) 6%, transparent) inset,
-    0 20px 40px -24px rgba(0, 0, 0, 0.7);
+    0 20px 40px -24px rgba(0, 0, 0, 0.7),
+    0 0 0 1px color-mix(in srgb, var(--color-gold) 6%, transparent),
+    0 0 48px -12px color-mix(in srgb, var(--color-gold) 35%, transparent);
   backdrop-filter: blur(14px);
+  transition: box-shadow 0.4s ease;
+}
+
+.plaque:hover {
+  box-shadow:
+    0 1px 0 0 color-mix(in srgb, var(--color-ivory) 8%, transparent) inset,
+    0 20px 40px -24px rgba(0, 0, 0, 0.75),
+    0 0 0 1px color-mix(in srgb, var(--color-gold) 12%, transparent),
+    0 0 64px -10px color-mix(in srgb, var(--color-gold) 50%, transparent);
 }
 
 .plaque::before {
