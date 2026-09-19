@@ -10,6 +10,11 @@ existant a travers l'interface [ERC-7943](https://eips.ethereum.org/EIPS/eip-794
   une doublure. Hardhat, pnpm.
 - **[`frontend/`](./frontend)** — console Next.js / Tailwind CSS / RainbowKit
   pour inspecter et administrer un adaptateur deploye. pnpm.
+  En ligne : **https://erc7943-adapter.vercel.app**
+- **[`docs/`](./docs)** — guides d'utilisation :
+  - [Guide utilisateur](./docs/guide-utilisateur.md) — utiliser la console.
+  - [Guide institutions](./docs/guide-institutions.md) — gouvernance du role
+    d'agent, deploiement d'une instance propre, contexte reglementaire.
 
 ## Demarrage rapide
 
