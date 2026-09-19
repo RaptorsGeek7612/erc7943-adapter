@@ -53,6 +53,40 @@
   }
 }
 
+@keyframes seal-oscillate {
+  0%,
+  100% {
+    transform: rotate(-3.5deg);
+  }
+  50% {
+    transform: rotate(3.5deg);
+  }
+}
+
+@keyframes gem-glint {
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes sparkle-twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes aurora-drift-a {
   0%,
   100% {
@@ -104,6 +138,26 @@ body {
 
 .animate-seal-shimmer {
   animation: seal-shimmer 1.3s ease-in-out;
+}
+
+.animate-seal-oscillate {
+  animation: seal-oscillate 7s ease-in-out infinite;
+}
+
+.animate-gem-glint {
+  animation: gem-glint 3.4s ease-in-out infinite;
+}
+
+.animate-sparkle-1 {
+  animation: sparkle-twinkle 3.2s ease-in-out infinite;
+}
+
+.animate-sparkle-2 {
+  animation: sparkle-twinkle 3.2s ease-in-out infinite 1.1s;
+}
+
+.animate-sparkle-3 {
+  animation: sparkle-twinkle 3.2s ease-in-out infinite 2.1s;
 }
 
 .animate-card-rise {
