@@ -91,17 +91,32 @@ export function AdapterOverview({ adapterAddress }: { adapterAddress: string }) 
         }
       />
       <Row label="Identifiant d'interface ERC7943 (calculé)" value={interfaceId ?? "…"} mono />
-      <Row
-        label="Compatible ERC7943"
-        value={supportsErc7943 === undefined ? "…" : supportsErc7943 ? "Oui" : "Non"}
-        tone={supportsErc7943 === false ? "warn" : "ok"}
-      />
-      <Row
-        label="Compatible ERC165"
-        value={supportsErc165 === undefined ? "…" : supportsErc165 ? "Oui" : "Non"}
-        tone={supportsErc165 === false ? "warn" : "ok"}
-      />
+      <div className="flex flex-col gap-1.5 sm:col-span-2">
+        <dt className="text-xs uppercase tracking-wider text-parchment">Compatibilité</dt>
+        <dd className="flex flex-wrap gap-2">
+          <CompatibilityBadge label="ERC7943" supported={supportsErc7943} />
+          <CompatibilityBadge label="ERC165" supported={supportsErc165} />
+        </dd>
+      </div>
     </dl>
+  );
+}
+
+function CompatibilityBadge({ label, supported }: { label: string; supported: boolean | undefined }) {
+  const state = supported === undefined ? "pending" : supported ? "ok" : "warn";
+  const styles =
+    state === "ok"
+      ? "border-emerald/30 bg-emerald/10 text-emerald"
+      : state === "warn"
+        ? "border-crimson/30 bg-crimson/10 text-crimson"
+        : "border-ivory/15 text-parchment";
+  const dot = state === "ok" ? "bg-emerald" : state === "warn" ? "bg-crimson" : "bg-parchment/50";
+
+  return (
+    <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium ${styles}`}>
+      <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${dot}`} />
+      {label}
+    </span>
   );
 }
 

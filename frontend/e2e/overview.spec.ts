@@ -18,8 +18,9 @@ test.describe("Vue d'ensemble", () => {
     await expect(page.getByText(SEPOLIA.token)).toBeVisible({ timeout: 15_000 });
     await expect(page.getByText("T-REX Sepolia Demo / TREXD / 0")).toBeVisible();
     await expect(page.getByText("0x5abd1f73")).toBeVisible();
-    await expect(page.getByText("Compatible ERC7943")).toBeVisible();
-    await expect(page.getByText("Oui").first()).toBeVisible();
+    await expect(page.getByText("Compatibilité")).toBeVisible();
+    await expect(page.getByText("ERC7943", { exact: true })).toBeVisible();
+    await expect(page.getByText("ERC165", { exact: true })).toBeVisible();
   });
 
   test("affiche un message neutre pour une adresse qui n'est pas l'adaptateur", async ({ page }) => {
