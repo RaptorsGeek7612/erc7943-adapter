@@ -98,12 +98,41 @@ noeuds sans session collante, et des lectures repetees de
 encore synchronises entre eux, provoquant des collisions de nonce
 (`replacement transaction underpriced`).
 
-Deploiement de reference (2026-09-19) :
+Deploiement de reference (2026-09-19), **code source verifie sur Etherscan** :
 
 | Contrat | Adresse |
 |---|---|
-| Adaptateur ERC-7943 | [`0x0EDf8DDcD22FF2CB92f8213852bd0eC30Ac23A21`](https://sepolia.etherscan.io/address/0x0EDf8DDcD22FF2CB92f8213852bd0eC30Ac23A21) |
-| Token ERC-3643 (T-REX Sepolia Demo, `TREXD`) | [`0xe43ca4B4100f82DB567BBb771C5DD70f4150d7c1`](https://sepolia.etherscan.io/address/0xe43ca4B4100f82DB567BBb771C5DD70f4150d7c1) |
+| Adaptateur ERC-7943 | [`0x0EDf8DDcD22FF2CB92f8213852bd0eC30Ac23A21`](https://sepolia.etherscan.io/address/0x0EDf8DDcD22FF2CB92f8213852bd0eC30Ac23A21#code) |
+| Token ERC-3643 (T-REX Sepolia Demo, `TREXD`, proxy) | [`0xe43ca4B4100f82DB567BBb771C5DD70f4150d7c1`](https://sepolia.etherscan.io/address/0xe43ca4B4100f82DB567BBb771C5DD70f4150d7c1#code) |
+
+### Verifier le code source
+
+```bash
+pnpm exec hardhat verify --network sepolia <adresse-adaptateur> <adresse-token>
+
+pnpm exec hardhat verify --network sepolia \
+  --contract "contracts/proxy/TokenProxy.sol:TokenProxy" \
+  <adresse-token> \
+  <trexImplementationAuthority> <identityRegistry> <defaultCompliance> \
+  "T-REX Sepolia Demo" "TREXD" "0" <tokenOID>
+```
+
+Le token deploye est un `TokenProxy` (voir `contracts/proxy/TokenProxy.sol`), pas
+directement un `Token` : `--contract` force le bon contrat, sinon la
+detection automatique se trompe sur le bytecode. Les adresses des arguments
+du constructeur sont dans `deployments/sepolia.json`.
+
+Deux pieges rencontres lors de la mise en place, corriges dans ce depot :
+
+- **`@nomiclabs/hardhat-etherscan`** (embarque par `hardhat-toolbox`) est
+  deprecie, fige sur l'API Etherscan V1 (desormais refusee) et sur un domaine
+  DNS mort (`solc-bin.ethereum.org`). Remplace par
+  `@nomicfoundation/hardhat-verify`, avec `hardhat-toolbox` demonte en
+  imports individuels dans `hardhat.config.ts` (les deux plugins definissent
+  une tache `verify` incompatible s'ils sont charges ensemble).
+- L'objet `etherscan.apiKey` par reseau (`{ sepolia: "..." }`) declenche le
+  mode V1 deprecie cote plugin : sur l'API V2, `apiKey` doit etre une seule
+  chaine, valable sur toutes les chaines.
 
 Le detail complet (registres, compliance, autorites) est dans
 [`deployments/sepolia.json`](./deployments/sepolia.json). Pour tester depuis

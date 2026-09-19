@@ -1,5 +1,15 @@
 import '@xyrusworx/hardhat-solidity-json';
-import '@nomicfoundation/hardhat-toolbox';
+// Equivalent a @nomicfoundation/hardhat-toolbox, mais sans son
+// @nomiclabs/hardhat-etherscan embarque : ce plugin est deprecie, fige sur
+// l'API Etherscan V1 (desormais refusee - "V2-only" depuis la migration
+// Etherscan), et definit une tache "verify" qui entre en conflit avec celle
+// de @nomicfoundation/hardhat-verify (V2) si les deux sont charges ensemble.
+import '@nomicfoundation/hardhat-chai-matchers';
+import '@nomiclabs/hardhat-ethers';
+import '@nomicfoundation/hardhat-network-helpers';
+import '@typechain/hardhat';
+import 'hardhat-gas-reporter';
+import '@nomicfoundation/hardhat-verify';
 import { HardhatUserConfig } from 'hardhat/config';
 import '@openzeppelin/hardhat-upgrades';
 import 'solidity-coverage';
@@ -20,9 +30,13 @@ const config: HardhatUserConfig = {
     },
   },
   etherscan: {
-    apiKey: {
-      sepolia: process.env.ETHERSCAN_API_KEY || '',
-    },
+    // "enabled" rendu explicite : la valeur par defaut du plugin se perd
+    // entre le chargement de la config et l'execution de la tache "verify"
+    // dans cet environnement (double resolution du module hardhat par pnpm).
+    enabled: true,
+    // Cle unique (API Etherscan V2, valable sur toutes les chaines) : un
+    // objet {reseau: cle} bascule le plugin en mode V1 deprecie et refuse.
+    apiKey: process.env.ETHERSCAN_API_KEY || '',
   },
   solidity: {
     compilers: [
