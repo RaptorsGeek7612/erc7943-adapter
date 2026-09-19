@@ -1,0 +1,86 @@
+name: Backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend.yml"
+  pull_request:
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend.yml"
+
+defaults:
+  run:
+    working-directory: backend
+
+jobs:
+  hardhat:
+    name: Compile + tests (Hardhat, vrai token T-REX)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+          cache-dependency-path: backend/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --ignore-scripts --frozen-lockfile
+
+      - name: Compile
+        run: pnpm exec hardhat compile
+
+      - name: Test (adaptateur, contre un vrai token T-REX)
+        run: pnpm run test:adapter
+
+  foundry:
+    name: Fuzzing (Foundry)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: foundry-rs/foundry-toolchain@v1
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+          cache-dependency-path: backend/pnpm-lock.yaml
+
+      - name: Install dependencies (node_modules requis pour les remappings)
+        run: pnpm install --ignore-scripts --frozen-lockfile
+
+      - name: Forge fmt check
+        run: forge fmt --check
+        continue-on-error: true # style uniquement, jamais bloquant
+
+      - name: Forge test (fuzzing, 256 runs/propriete)
+        run: forge test --match-path "test/foundry/*" -vv
+
+  slither:
+    name: Analyse statique (Slither)
+    runs-on: ubuntu-latest
+    # Informationnel : les findings sont deja tries a la main dans AUDIT.md.
+    # Un nouveau finding introduit par un futur changement doit d'abord etre
+    # trie manuellement avant de rendre ce job bloquant pour ce fichier-la.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Slither
+        run: pip install slither-analyzer
+
+      - name: Slither (adaptateur uniquement)
+        run: slither contracts/adapters/ERC7943Adapter.sol

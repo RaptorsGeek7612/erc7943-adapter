@@ -4,7 +4,7 @@
   "private": true,
   "description": "Adaptateur ERC-7943 (uRWA) pour token ERC-3643, teste contre une vraie suite T-REX vendorisee dans ce depot.",
   "main": "index.js",
-  "packageManager": "pnpm@9.15.0",
+  "packageManager": "pnpm@12.4.2",
   "directories": {
     "doc": "docs",
     "test": "test"
