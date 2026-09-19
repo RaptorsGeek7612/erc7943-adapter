@@ -25,10 +25,10 @@ export function extractErrorMessage(error: unknown): string {
       const errorName = reverted.data?.errorName;
       if (errorName && CUSTOM_ERROR_MESSAGES[errorName]) return CUSTOM_ERROR_MESSAGES[errorName];
       if (reverted.reason) return reverted.reason;
-      return "Le contrat a refusé cet appel. Vérifie l'adresse de l'adaptateur et les paramètres saisis.";
+      return "Cette adresse ne répond pas comme l'adaptateur ERC-7943 attendu. Vérifie que c'est bien l'adresse du contrat (pas une adresse de wallet).";
     }
     if (error.walk((e) => e instanceof ContractFunctionZeroDataError)) {
-      return "Aucune réponse de cette adresse : vérifie qu'il s'agit bien du contrat de l'adaptateur.";
+      return "Cette adresse ne répond pas comme l'adaptateur ERC-7943 attendu. Vérifie que c'est bien l'adresse du contrat (pas une adresse de wallet).";
     }
     return error.shortMessage || error.message || "Une erreur est survenue.";
   }
@@ -65,7 +65,7 @@ export function ReadChecks({ adapterAddress }: { adapterAddress: string }) {
     abi: erc7943AdapterAbi,
     functionName: "canSend",
     args: fromValid && amount !== undefined ? [from as Address, BigInt(0), amount] : undefined,
-    query: { enabled: adapterEnabled && fromValid && amount !== undefined },
+    query: { enabled: adapterEnabled && fromValid && amount !== undefined, retry: false },
   });
 
   const canReceive = useReadContract({
@@ -73,7 +73,7 @@ export function ReadChecks({ adapterAddress }: { adapterAddress: string }) {
     abi: erc7943AdapterAbi,
     functionName: "canReceive",
     args: toValid && amount !== undefined ? [to as Address, BigInt(0), amount] : undefined,
-    query: { enabled: adapterEnabled && toValid && amount !== undefined },
+    query: { enabled: adapterEnabled && toValid && amount !== undefined, retry: false },
   });
 
   const canTransfer = useReadContract({
@@ -84,7 +84,7 @@ export function ReadChecks({ adapterAddress }: { adapterAddress: string }) {
       fromValid && toValid && amount !== undefined
         ? [from as Address, to as Address, BigInt(0), amount]
         : undefined,
-    query: { enabled: adapterEnabled && fromValid && toValid && amount !== undefined },
+    query: { enabled: adapterEnabled && fromValid && toValid && amount !== undefined, retry: false },
   });
 
   const frozenFrom = useReadContract({
@@ -92,7 +92,7 @@ export function ReadChecks({ adapterAddress }: { adapterAddress: string }) {
     abi: erc7943AdapterAbi,
     functionName: "getFrozenTokens",
     args: fromValid ? [from as Address, BigInt(0)] : undefined,
-    query: { enabled: adapterEnabled && fromValid },
+    query: { enabled: adapterEnabled && fromValid, retry: false },
   });
 
   if (!adapterEnabled) {
@@ -156,7 +156,7 @@ function ResultCard<T>({
     body = format(state.data);
     tone = "text-ivory";
   } else {
-    body = String(state.data);
+    body = state.data === true ? "Oui" : "Non";
     tone = state.data === true ? "text-emerald" : "text-crimson";
   }
 

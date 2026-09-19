@@ -5,6 +5,7 @@ import { useReadContract, useReadContracts } from "wagmi";
 
 import { erc20MetadataAbi } from "@/lib/erc20MetadataAbi";
 import { erc7943AdapterAbi } from "@/lib/erc7943AdapterAbi";
+import { extractErrorMessage } from "./ReadChecks";
 
 const ERC165_INTERFACE_ID = "0x01ffc9a7";
 
@@ -12,18 +13,22 @@ export function AdapterOverview({ adapterAddress }: { adapterAddress: string }) 
   const enabled = isAddress(adapterAddress);
   const address = enabled ? (adapterAddress as Address) : undefined;
 
-  const { data: interfaceId } = useReadContract({
+  const {
+    data: interfaceId,
+    isError: interfaceIdError,
+    error: interfaceIdErrorDetail,
+  } = useReadContract({
     address,
     abi: erc7943AdapterAbi,
     functionName: "erc7943InterfaceId",
-    query: { enabled },
+    query: { enabled, retry: false },
   });
 
-  const { data: tokenAddress } = useReadContract({
+  const { data: tokenAddress, isError: tokenError } = useReadContract({
     address,
     abi: erc7943AdapterAbi,
     functionName: "token",
-    query: { enabled },
+    query: { enabled, retry: false },
   });
 
   const { data: supportsChecks } = useReadContracts({
@@ -41,7 +46,7 @@ export function AdapterOverview({ adapterAddress }: { adapterAddress: string }) 
         args: [ERC165_INTERFACE_ID],
       },
     ],
-    query: { enabled: enabled && Boolean(interfaceId) },
+    query: { enabled: enabled && Boolean(interfaceId), retry: false },
   });
 
   const tokenEnabled = Boolean(tokenAddress);
@@ -51,13 +56,22 @@ export function AdapterOverview({ adapterAddress }: { adapterAddress: string }) 
       { address: tokenAddress, abi: erc20MetadataAbi, functionName: "symbol" },
       { address: tokenAddress, abi: erc20MetadataAbi, functionName: "decimals" },
     ],
-    query: { enabled: tokenEnabled },
+    query: { enabled: tokenEnabled, retry: false },
   });
 
   if (!enabled) {
     return (
       <p className="text-sm text-parchment">
         Renseigne une adresse d&apos;adaptateur valide pour voir ses informations.
+      </p>
+    );
+  }
+
+  if (interfaceIdError || tokenError) {
+    return (
+      <p className="text-sm text-crimson">
+        {extractErrorMessage(interfaceIdErrorDetail) ||
+          "Impossible de lire cette adresse : vérifie qu'il s'agit bien du contrat de l'adaptateur ERC-7943, pas d'une adresse de wallet."}
       </p>
     );
   }
@@ -80,12 +94,12 @@ export function AdapterOverview({ adapterAddress }: { adapterAddress: string }) 
       <Row label="Identifiant d'interface ERC-7943 (calculé)" value={interfaceId ?? "…"} mono />
       <Row
         label="Compatible ERC-7943"
-        value={supportsErc7943 === undefined ? "…" : supportsErc7943 ? "true" : "false"}
+        value={supportsErc7943 === undefined ? "…" : supportsErc7943 ? "Oui" : "Non"}
         tone={supportsErc7943 === false ? "warn" : "ok"}
       />
       <Row
         label="Compatible ERC-165"
-        value={supportsErc165 === undefined ? "…" : supportsErc165 ? "true" : "false"}
+        value={supportsErc165 === undefined ? "…" : supportsErc165 ? "Oui" : "Non"}
         tone={supportsErc165 === false ? "warn" : "ok"}
       />
     </dl>
