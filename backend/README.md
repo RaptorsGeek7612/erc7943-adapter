@@ -102,7 +102,7 @@ Deploiement de reference (2026-09-19), **code source verifie sur Etherscan** :
 
 | Contrat | Adresse |
 |---|---|
-| Adaptateur ERC-7943 | [`0x0EDf8DDcD22FF2CB92f8213852bd0eC30Ac23A21`](https://sepolia.etherscan.io/address/0x0EDf8DDcD22FF2CB92f8213852bd0eC30Ac23A21#code) |
+| Adaptateur ERC-7943 | [`0x6D2063A5a570fEEd7ef9abC301B8f3274Eef9052`](https://sepolia.etherscan.io/address/0x6D2063A5a570fEEd7ef9abC301B8f3274Eef9052#code) |
 | Token ERC-3643 (T-REX Sepolia Demo, `TREXD`, proxy) | [`0xe43ca4B4100f82DB567BBb771C5DD70f4150d7c1`](https://sepolia.etherscan.io/address/0xe43ca4B4100f82DB567BBb771C5DD70f4150d7c1#code) |
 
 ### Verifier le code source
@@ -155,12 +155,16 @@ dans `IERC7943.sol`. Pour la version d'interface de ce depot, la valeur est :
 
 - **Compile** avec solc 0.8.35 (adaptateur) contre le vrai depot T-REX en solc 0.8.17.
 - **15 tests passent** contre un vrai token T-REX, pas une doublure.
+- **7 proprietes de fuzzing passent** (256 runs chacune) contre un mock
+  controlable — voir `test/foundry/`.
 - Couvert : lecture deleguee, pause, gel total et partiel, refus d'ecriture sans
   le role d'agent, transfert force, traduction de `setFrozenTokens` dans les deux
   sens et sans changement, refus de tout `tokenId` non nul, introspection.
 - Non couvert : le comportement face a un token ERC-3643 d'une autre version que
   celle du depot canonique.
-- Non audite.
+- **Audit automatise realise** (Slither, Aderyn, Semgrep, forge lint, fuzzing) —
+  voir [AUDIT.md](./AUDIT.md). **Toujours pas d'audit professionnel independant** :
+  ne pas deployer sur mainnet avec des actifs reels sans en commanditer un.
 
 ## Licence
 

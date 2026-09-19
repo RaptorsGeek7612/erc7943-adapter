@@ -11,6 +11,13 @@
   "trexImplementationAuthority": "0x9351e174c26573B0fC4Ef7EDBCcbf16B86635Ad0",
   "identityImplementationAuthority": "0xeb3030c984bb125aa170d9011D4e789489B82B30",
   "identityFactory": "0xC9cc02291f374649857d57469858344545B4f450",
-  "adapter": "0x0EDf8DDcD22FF2CB92f8213852bd0eC30Ac23A21",
-  "deployedAt": "2026-09-19T14:01:28.411Z"
+  "adapter": "0x6D2063A5a570fEEd7ef9abC301B8f3274Eef9052",
+  "deployedAt": "2026-09-19T14:01:28.411Z",
+  "adapterDeployedAt": "2026-09-20T00:00:00.000Z",
+  "previousAdapters": [
+    {
+      "address": "0x0EDf8DDcD22FF2CB92f8213852bd0eC30Ac23A21",
+      "note": "Remplace suite a AUDIT.md : forcedTransfer ne verifiait pas le retour du token sous-jacent (voir backend/AUDIT.md finding 1). Reste deploye et fonctionnel mais deprecie."
+    }
+  ]
 }

@@ -79,7 +79,7 @@ contract ERC7943Adapter is IERC7943, IERC165 {
     IERC3643Minimal public immutable token;
 
     error UnsupportedTokenId(uint256 tokenId);
-    error AdapterIsNotAgent();
+    error ForcedTransferFailed();
 
     constructor(address _token) {
         token = IERC3643Minimal(_token);
@@ -109,13 +109,16 @@ contract ERC7943Adapter is IERC7943, IERC165 {
     }
 
     /// @inheritdoc IERC7943
-    function canReceive(address to, uint256 tokenId, uint256 amount)
+    /// @dev `amount` est laisse anonyme : ERC-7943 impose sa presence dans la
+    ///      signature (coherence avec canSend/canTransfer), mais le sens du
+    ///      standard pour canReceive ne depend que de l'identite/du gel du
+    ///      destinataire, jamais du montant.
+    function canReceive(address to, uint256 tokenId, uint256 /* amount */)
         public
         view
         fungibleOnly(tokenId)
         returns (bool)
     {
-        amount;
         if (token.paused()) return false;
         if (token.isFrozen(to)) return false;
         return IIdentityRegistryMinimal(token.identityRegistry()).isVerified(to);
@@ -140,7 +143,7 @@ contract ERC7943Adapter is IERC7943, IERC165 {
 
     /// @inheritdoc IERC7943
     function getFrozenTokens(address user, uint256 tokenId)
-        public
+        external
         view
         fungibleOnly(tokenId)
         returns (uint256)
@@ -174,11 +177,16 @@ contract ERC7943Adapter is IERC7943, IERC165 {
     }
 
     /// @inheritdoc IERC7943
+    /// @dev Le retour est verifie explicitement : IERC3643Minimal ne garantit
+    ///      pas un revert sur echec (T-REX le fait, mais l'interface cible
+    ///      generiquement tout token ERC-3643). Emettre ForcedTransfer alors
+    ///      que le transfert sous-jacent a echoue serait le silencieux-mais-faux
+    ///      exactement ce que cet adaptateur s'interdit ailleurs (role d'agent).
     function forcedTransfer(address from, address to, uint256 tokenId, uint256 amount)
         external
         fungibleOnly(tokenId)
     {
-        token.forcedTransfer(from, to, amount);
+        if (!token.forcedTransfer(from, to, amount)) revert ForcedTransferFailed();
         emit ForcedTransfer(from, to, 0, amount);
     }
 

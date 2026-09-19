@@ -166,10 +166,14 @@ comparer l'`interfaceId` calcule (expose par
 Un changement de signature ferait automatiquement changer cette valeur —
 c'est le signal a surveiller.
 
-**L'adaptateur n'est pas audite.** Il est teste (voir §7) mais n'a pas fait
-l'objet d'un audit de securite independant. Toute institution envisageant
-un usage avec des actifs reels doit commanditer son propre audit avant mise
-en production, en particulier sur le chemin d'ecriture (§3).
+**L'adaptateur n'est pas audite par un cabinet independant.** Une chaine
+d'analyse automatisee (Slither, Aderyn, Semgrep, `forge lint`, fuzzing
+Foundry) a ete executee et ses resultats tries a la main — voir
+[backend/AUDIT.md](../backend/AUDIT.md) pour le detail des findings
+corriges et acceptes. **Ce n'est pas un substitut a un audit professionnel.**
+Toute institution envisageant un usage avec des actifs reels doit
+commanditer son propre audit avant mise en production, en particulier sur
+le chemin d'ecriture (§3).
 
 ## 6. Deployer sa propre instance
 
@@ -258,7 +262,7 @@ uniquement — ne pas utiliser pour des actifs reels) :
 
 | Contrat | Adresse |
 |---|---|
-| Adaptateur | [`0x0EDf8DDcD22FF2CB92f8213852bd0eC30Ac23A21`](https://sepolia.etherscan.io/address/0x0EDf8DDcD22FF2CB92f8213852bd0eC30Ac23A21#code) |
+| Adaptateur | [`0x6D2063A5a570fEEd7ef9abC301B8f3274Eef9052`](https://sepolia.etherscan.io/address/0x6D2063A5a570fEEd7ef9abC301B8f3274Eef9052#code) |
 | Token ERC-3643 (T-REX Sepolia Demo) | [`0xe43ca4B4100f82DB567BBb771C5DD70f4150d7c1`](https://sepolia.etherscan.io/address/0xe43ca4B4100f82DB567BBb771C5DD70f4150d7c1#code) |
 
 ## 10. References

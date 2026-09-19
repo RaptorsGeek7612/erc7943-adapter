@@ -1,0 +1,17 @@
+[profile.default]
+# Ne pointe QUE sur l'adaptateur : contracts/ contient aussi la suite T-REX
+# vendorisee (solc 0.8.17), que ce profil Foundry (0.8.35 uniquement) ne
+# doit jamais tenter de compiler. Hardhat (hardhat.config.ts) reste l'outil
+# pour la suite T-REX et les tests contre un vrai token.
+src = "contracts/adapters"
+test = "test/foundry"
+out = "out"
+libs = ["lib", "node_modules"]
+solc_version = "0.8.35"
+optimizer = true
+optimizer_runs = 200
+
+remappings = [
+  "forge-std/=lib/forge-std/src/",
+  "@onchain-id/=node_modules/@onchain-id/",
+]

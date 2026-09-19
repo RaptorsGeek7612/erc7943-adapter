@@ -10,6 +10,8 @@ artifacts/
 cache/
 docgen/
 flat/
+out/
+report.md
 
 # IDEs
 .idea/

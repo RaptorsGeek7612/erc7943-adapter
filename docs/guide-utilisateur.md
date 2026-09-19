@@ -33,7 +33,7 @@ inspecter (et non l'adresse du token, ni une adresse de portefeuille — voir
 Exemple de reference, deploye sur le testnet Sepolia :
 
 ```
-0x0EDf8DDcD22FF2CB92f8213852bd0eC30Ac23A21
+0x6D2063A5a570fEEd7ef9abC301B8f3274Eef9052
 ```
 
 Des que l'adresse est valide, la section **Vue d'ensemble** se remplit

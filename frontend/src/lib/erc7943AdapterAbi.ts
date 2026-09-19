@@ -10,7 +10,6 @@ export const erc7943AdapterAbi = [
     stateMutability: "nonpayable",
     type: "constructor",
   },
-  { inputs: [], name: "AdapterIsNotAgent", type: "error" },
   {
     inputs: [
       { internalType: "address", name: "to", type: "address" },
@@ -49,6 +48,7 @@ export const erc7943AdapterAbi = [
     name: "ERC7943InsufficientUnfrozenBalance",
     type: "error",
   },
+  { inputs: [], name: "ForcedTransferFailed", type: "error" },
   {
     inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
     name: "UnsupportedTokenId",
