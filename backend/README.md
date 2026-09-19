@@ -1,5 +1,7 @@
 # ERC-7943 Adapter for ERC-3643 (backend)
 
+Depot : [github.com/RaptorsGeek7612/erc7943-adapter](https://github.com/RaptorsGeek7612/erc7943-adapter)
+
 Expose un token ERC-3643 existant a travers l'interface ERC-7943 (uRWA), sans le redeployer.
 
 Ce dossier **est** un clone vendorise de [T-REX](https://github.com/TokenySolutions/T-REX)

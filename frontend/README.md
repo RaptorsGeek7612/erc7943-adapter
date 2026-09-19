@@ -1,5 +1,7 @@
 # Adaptateur ERC-7943 — frontend
 
+Depot : [github.com/RaptorsGeek7612/erc7943-adapter](https://github.com/RaptorsGeek7612/erc7943-adapter)
+
 Console d'inspection et d'administration pour un contrat `ERC7943Adapter`
 (voir `../backend`). Next.js (App Router) + Tailwind CSS + RainbowKit/wagmi,
 en pnpm.
