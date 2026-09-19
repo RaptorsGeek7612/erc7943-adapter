@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #060911;
+  --foreground: #ece6d6;
 }
 
 @theme inline {
@@ -10,17 +10,157 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-playfair);
+
+  --color-ink: #060911;
+  --color-ink-2: #0c1322;
+  --color-ink-3: #131d33;
+  --color-ivory: #ece6d6;
+  --color-parchment: #a9a08c;
+  --color-gold: #c9a227;
+  --color-gold-bright: #f0d28a;
+  --color-emerald: #3ddc9a;
+  --color-crimson: #e2685c;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes seal-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes seal-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes seal-shimmer {
+  0% {
+    transform: translateX(-130%) rotate(14deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(230%) rotate(14deg);
+    opacity: 0;
+  }
+}
+
+@keyframes aurora-drift-a {
+  0%,
+  100% {
+    transform: translate(-8%, -6%) scale(1);
+  }
+  50% {
+    transform: translate(6%, 5%) scale(1.12);
+  }
+}
+
+@keyframes aurora-drift-b {
+  0%,
+  100% {
+    transform: translate(6%, 4%) scale(1);
+  }
+  50% {
+    transform: translate(-9%, -7%) scale(1.08);
+  }
+}
+
+@keyframes card-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-gold) 35%, transparent);
+  color: var(--color-ivory);
+}
+
+.animate-seal-spin {
+  animation: seal-spin 50s linear infinite;
+}
+
+.animate-seal-pulse {
+  animation: seal-pulse 2.6s ease-in-out infinite;
+}
+
+.animate-seal-shimmer {
+  animation: seal-shimmer 1.3s ease-in-out;
+}
+
+.animate-card-rise {
+  animation: card-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.plaque {
+  position: relative;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--color-gold) 18%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--color-ivory) 5%, transparent), transparent 40%),
+    color-mix(in srgb, var(--color-ink-2) 88%, transparent);
+  box-shadow:
+    0 1px 0 0 color-mix(in srgb, var(--color-ivory) 6%, transparent) inset,
+    0 20px 40px -24px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(14px);
+}
+
+.plaque::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--color-gold) 55%, transparent),
+    transparent 30%,
+    transparent 70%,
+    color-mix(in srgb, var(--color-gold) 30%, transparent)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.field {
+  border-radius: 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--color-ivory) 14%, transparent);
+  background: color-mix(in srgb, var(--color-ink) 55%, transparent);
+  color: var(--color-ivory);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.field:focus {
+  outline: none;
+  border-color: color-mix(in srgb, var(--color-gold) 70%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-gold) 18%, transparent);
+}
+
+.field-invalid {
+  border-color: color-mix(in srgb, var(--color-crimson) 65%, transparent) !important;
 }

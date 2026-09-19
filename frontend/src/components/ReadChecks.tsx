@@ -72,7 +72,7 @@ export function ReadChecks({ adapterAddress }: { adapterAddress: string }) {
   });
 
   if (!adapterEnabled) {
-    return <p className="text-sm text-zinc-500">Renseigne d&apos;abord une adresse d&apos;adaptateur valide.</p>;
+    return <p className="text-sm text-parchment">Renseigne d&apos;abord une adresse d&apos;adaptateur valide.</p>;
   }
 
   return (
@@ -80,17 +80,17 @@ export function ReadChecks({ adapterAddress }: { adapterAddress: string }) {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <AddressField label="Émetteur" value={from} onChange={setFrom} />
         <AddressField label="Destinataire" value={to} onChange={setTo} />
-        <label className="flex flex-col gap-1 text-sm">
-          <span className="font-medium text-zinc-700 dark:text-zinc-300">Montant</span>
+        <label className="flex flex-col gap-1.5 text-sm">
+          <span className="text-xs font-medium uppercase tracking-wider text-parchment">Montant</span>
           <input
             type="text"
             inputMode="numeric"
             value={amountRaw}
             onChange={(event) => setAmountRaw(event.target.value.trim())}
-            className="rounded-md border border-zinc-300 bg-white px-3 py-2 font-mono text-xs outline-none focus:border-sky-500 dark:border-zinc-700 dark:bg-zinc-900"
+            className="field px-3 py-2 font-mono text-xs"
           />
           {amountRaw && amount === undefined ? (
-            <span className="text-xs text-red-500">Entier positif attendu.</span>
+            <span className="text-xs text-crimson">Entier positif attendu.</span>
           ) : null}
         </label>
       </div>
@@ -119,26 +119,26 @@ function ResultCard<T>({
   format?: (value: T | undefined) => string;
 }) {
   let body: string;
-  let tone = "text-zinc-500";
+  let tone = "text-parchment";
 
   if (state.isFetching) {
     body = "chargement…";
   } else if (state.isError) {
     body = extractErrorMessage(state.error);
-    tone = "text-red-500";
+    tone = "text-crimson";
   } else if (state.data === undefined) {
     body = "renseigne les champs ci-dessus";
   } else if (format) {
     body = format(state.data);
-    tone = "text-zinc-900 dark:text-zinc-100";
+    tone = "text-ivory";
   } else {
     body = String(state.data);
-    tone = state.data === true ? "text-emerald-600 dark:text-emerald-400" : "text-red-500";
+    tone = state.data === true ? "text-emerald" : "text-crimson";
   }
 
   return (
-    <div className="rounded-lg border border-zinc-200 p-3 dark:border-zinc-800">
-      <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200">{title}</p>
+    <div className="rounded-lg border border-ivory/10 bg-ink/40 p-3">
+      <p className="text-sm font-medium text-ivory/90">{title}</p>
       <p className={`mt-1.5 truncate text-sm font-semibold ${tone}`}>{body}</p>
     </div>
   );

@@ -56,7 +56,7 @@ export function AdapterOverview({ adapterAddress }: { adapterAddress: string }) 
 
   if (!enabled) {
     return (
-      <p className="text-sm text-zinc-500">
+      <p className="text-sm text-parchment">
         Renseigne une adresse d&apos;adaptateur valide pour voir ses informations.
       </p>
     );
@@ -105,10 +105,10 @@ function Row({
 }) {
   return (
     <div className="flex flex-col gap-0.5">
-      <dt className="text-xs uppercase tracking-wide text-zinc-500">{label}</dt>
+      <dt className="text-xs uppercase tracking-wider text-parchment">{label}</dt>
       <dd
-        className={`${mono ? "font-mono text-xs" : "text-sm"} ${
-          tone === "warn" ? "text-amber-600 dark:text-amber-400" : tone === "ok" ? "text-emerald-600 dark:text-emerald-400" : ""
+        className={`${mono ? "font-mono text-xs" : "text-sm"} text-ivory ${
+          tone === "warn" ? "!text-crimson" : tone === "ok" ? "!text-emerald" : ""
         }`}
       >
         {value}

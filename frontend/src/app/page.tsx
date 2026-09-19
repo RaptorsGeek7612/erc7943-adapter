@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { AddressField } from "@/components/AddressField";
 import { AdapterOverview } from "@/components/AdapterOverview";
 import { AgentActions } from "@/components/AgentActions";
+import { Logo } from "@/components/Logo";
 import { ReadChecks } from "@/components/ReadChecks";
 
 const STORAGE_KEY = "erc7943-adapter-address";
@@ -39,18 +40,19 @@ export default function Home() {
   }, [adapterAddress]);
 
   return (
-    <div className="flex flex-1 flex-col bg-zinc-50 font-sans dark:bg-black">
-      <header className="flex items-center justify-between border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
-        <div>
-          <h1 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">Adaptateur ERC-7943</h1>
-          <p className="text-xs text-zinc-500">Console d&apos;inspection pour un token ERC-3643 expose via ERC-7943</p>
-        </div>
+    <div className="flex flex-1 flex-col">
+      <header className="flex items-center justify-between px-6 py-6 sm:px-10">
+        <Logo />
         <ConnectButton />
       </header>
 
-      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-8 px-6 py-8">
-        <section className="rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-950">
-          <h2 className="mb-3 text-sm font-semibold text-zinc-900 dark:text-zinc-50">Adaptateur cible</h2>
+      <p className="px-6 pb-2 text-sm text-parchment sm:px-10">
+        Console d&apos;inspection pour un token ERC-3643 exposé via ERC-7943
+      </p>
+
+      <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 px-6 py-8 sm:px-10">
+        <section className="plaque animate-card-rise p-6" style={{ animationDelay: "0ms" }}>
+          <h2 className="font-display mb-3 text-lg font-semibold text-ivory">Adaptateur cible</h2>
           <AddressField
             label="Adresse du contrat de l'adaptateur"
             value={adapterAddress}
@@ -58,31 +60,31 @@ export default function Home() {
           />
         </section>
 
-        <section className="rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-950">
-          <h2 className="mb-3 text-sm font-semibold text-zinc-900 dark:text-zinc-50">Vue d&apos;ensemble</h2>
+        <section className="plaque animate-card-rise p-6" style={{ animationDelay: "80ms" }}>
+          <h2 className="font-display mb-4 text-lg font-semibold text-ivory">Vue d&apos;ensemble</h2>
           <AdapterOverview adapterAddress={adapterAddress} />
         </section>
 
-        <section className="rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-950">
-          <h2 className="mb-3 text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-            Verifications de conformite (lecture)
+        <section className="plaque animate-card-rise p-6" style={{ animationDelay: "160ms" }}>
+          <h2 className="font-display mb-4 text-lg font-semibold text-ivory">
+            Vérifications de conformité
           </h2>
           <ReadChecks adapterAddress={adapterAddress} />
         </section>
 
-        <section className="rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-950">
-          <h2 className="mb-1 text-sm font-semibold text-zinc-900 dark:text-zinc-50">Actions d&apos;agent (ecriture)</h2>
-          <p className="mb-3 text-xs text-zinc-500">
-            Necessitent que ce contrat adaptateur porte le role d&apos;agent sur le token ERC-3643.
+        <section className="plaque animate-card-rise p-6" style={{ animationDelay: "240ms" }}>
+          <h2 className="font-display text-lg font-semibold text-ivory">Actions d&apos;agent</h2>
+          <p className="mb-4 text-xs text-parchment">
+            Nécessitent que ce contrat adaptateur porte le rôle d&apos;agent sur le token ERC-3643.
           </p>
           <AgentActions adapterAddress={adapterAddress} />
         </section>
       </main>
 
-      <footer className="border-t border-zinc-200 px-6 py-4 text-center text-xs text-zinc-500 dark:border-zinc-800">
-        ERC-7943 est un brouillon au stade Review. Verifie l&apos;identifiant d&apos;interface affiche contre{" "}
+      <footer className="px-6 py-8 text-center text-xs text-parchment sm:px-10">
+        ERC-7943 est un brouillon au stade Review. Vérifie l&apos;identifiant d&apos;interface affiché contre{" "}
         <a
-          className="underline"
+          className="text-gold underline decoration-gold/40 underline-offset-2 transition-colors hover:text-gold-bright"
           href="https://eips.ethereum.org/EIPS/eip-7943"
           target="_blank"
           rel="noreferrer"
