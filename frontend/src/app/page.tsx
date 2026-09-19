@@ -80,7 +80,7 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-zinc-200 px-6 py-4 text-center text-xs text-zinc-500 dark:border-zinc-800">
-        ERC-7943 est un brouillon au stade Review — verifie l&apos;identifiant d&apos;interface affiche contre{" "}
+        ERC-7943 est un brouillon au stade Review. Verifie l&apos;identifiant d&apos;interface affiche contre{" "}
         <a
           className="underline"
           href="https://eips.ethereum.org/EIPS/eip-7943"
