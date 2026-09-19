@@ -1,18 +1,42 @@
 "use client";
 
 import { useState } from "react";
-import { isAddress, type Address } from "viem";
+import { BaseError, ContractFunctionRevertedError, ContractFunctionZeroDataError, isAddress, type Address } from "viem";
 import { useReadContract } from "wagmi";
 
 import { erc7943AdapterAbi } from "@/lib/erc7943AdapterAbi";
 import { AddressField } from "./AddressField";
 
+/** Erreurs personnalisees d'IERC7943.sol / ERC7943Adapter.sol, en langage clair. */
+const CUSTOM_ERROR_MESSAGES: Record<string, string> = {
+  AdapterIsNotAgent: "L'adaptateur ne détient pas (encore) le rôle d'agent sur ce token.",
+  ERC7943CannotSend:
+    "L'émetteur ne peut pas envoyer ce montant : compte suspendu, non vérifié, ou solde disponible insuffisant.",
+  ERC7943CannotReceive: "Le destinataire ne peut pas recevoir ce montant : compte suspendu ou non vérifié.",
+  ERC7943CannotTransfer: "Ce transfert ne respecte pas les règles de conformité du token.",
+  ERC7943InsufficientUnfrozenBalance: "Le solde disponible (hors quantité gelée) est insuffisant pour ce montant.",
+  UnsupportedTokenId: "Seul le tokenId 0 est pris en charge : ce token est purement fongible.",
+};
+
 export function extractErrorMessage(error: unknown): string {
+  if (error instanceof BaseError) {
+    const reverted = error.walk((e) => e instanceof ContractFunctionRevertedError);
+    if (reverted instanceof ContractFunctionRevertedError) {
+      const errorName = reverted.data?.errorName;
+      if (errorName && CUSTOM_ERROR_MESSAGES[errorName]) return CUSTOM_ERROR_MESSAGES[errorName];
+      if (reverted.reason) return reverted.reason;
+      return "Le contrat a refusé cet appel. Vérifie l'adresse de l'adaptateur et les paramètres saisis.";
+    }
+    if (error.walk((e) => e instanceof ContractFunctionZeroDataError)) {
+      return "Aucune réponse de cette adresse : vérifie qu'il s'agit bien du contrat de l'adaptateur.";
+    }
+    return error.shortMessage || error.message || "Une erreur est survenue.";
+  }
   if (error && typeof error === "object") {
     const withMessages = error as { shortMessage?: string; message?: string };
-    return withMessages.shortMessage ?? withMessages.message ?? "erreur";
+    return withMessages.shortMessage ?? withMessages.message ?? "Une erreur est survenue.";
   }
-  return "erreur";
+  return "Une erreur est survenue.";
 }
 
 function parseAmount(raw: string): bigint | undefined {
