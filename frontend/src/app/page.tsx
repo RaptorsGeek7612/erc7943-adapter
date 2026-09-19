@@ -41,9 +41,11 @@ export default function Home() {
 
   return (
     <div className="flex flex-1 flex-col">
-      <header className="flex items-center justify-between px-6 py-6 sm:px-10">
+      <header className="flex flex-col gap-4 px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-10">
         <Logo />
-        <ConnectButton />
+        <div className="sm:shrink-0">
+          <ConnectButton />
+        </div>
       </header>
 
       <p className="font-display px-6 pb-3 text-base italic tracking-wide text-parchment sm:px-10">

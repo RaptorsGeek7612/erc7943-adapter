@@ -120,7 +120,7 @@ function Row({
     <div className="flex flex-col gap-0.5">
       <dt className="text-xs uppercase tracking-wider text-parchment">{label}</dt>
       <dd
-        className={`${mono ? "font-mono text-xs" : "text-sm"} text-ivory ${
+        className={`${mono ? "font-mono text-xs break-all" : "text-sm"} text-ivory ${
           tone === "warn" ? "!text-crimson" : tone === "ok" ? "!text-emerald" : ""
         }`}
       >
