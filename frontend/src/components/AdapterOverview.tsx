@@ -70,8 +70,7 @@ export function AdapterOverview({ adapterAddress }: { adapterAddress: string }) 
   if (interfaceIdError || tokenError) {
     return (
       <p className="text-sm text-crimson">
-        {extractErrorMessage(interfaceIdErrorDetail) ||
-          "Impossible de lire cette adresse : vérifie qu'il s'agit bien du contrat de l'adaptateur ERC-7943, pas d'une adresse de wallet."}
+        {extractErrorMessage(interfaceIdErrorDetail) || "Aucun adaptateur détecté à cette adresse."}
       </p>
     );
   }

@@ -18,25 +18,41 @@ const CUSTOM_ERROR_MESSAGES: Record<string, string> = {
   UnsupportedTokenId: "Seul le tokenId 0 est pris en charge : ce token est purement fongible.",
 };
 
+const GENERIC_MESSAGE = "Aucun adaptateur détecté à cette adresse.";
+const FALLBACK_MESSAGE = "Une erreur est survenue.";
+
+/**
+ * Filet de securite : quelle que soit la source (viem, wagmi, un futur cas
+ * non prevu), un message qui ressemble a du jargon technique brut ne doit
+ * jamais s'afficher tel quel a l'ecran.
+ */
+function sanitize(message: string | undefined | null): string {
+  if (!message) return FALLBACK_MESSAGE;
+  if (/contract function|reverted|execution reverted|0x[0-9a-fA-F]{6,}/i.test(message)) {
+    return GENERIC_MESSAGE;
+  }
+  return message;
+}
+
 export function extractErrorMessage(error: unknown): string {
   if (error instanceof BaseError) {
     const reverted = error.walk((e) => e instanceof ContractFunctionRevertedError);
     if (reverted instanceof ContractFunctionRevertedError) {
       const errorName = reverted.data?.errorName;
       if (errorName && CUSTOM_ERROR_MESSAGES[errorName]) return CUSTOM_ERROR_MESSAGES[errorName];
-      if (reverted.reason) return reverted.reason;
-      return "Adresse invalide : ce n'est pas le contrat de l'adaptateur.";
+      if (reverted.reason) return sanitize(reverted.reason);
+      return GENERIC_MESSAGE;
     }
     if (error.walk((e) => e instanceof ContractFunctionZeroDataError)) {
-      return "Adresse invalide : ce n'est pas le contrat de l'adaptateur.";
+      return GENERIC_MESSAGE;
     }
-    return error.shortMessage || error.message || "Une erreur est survenue.";
+    return sanitize(error.shortMessage || error.message);
   }
   if (error && typeof error === "object") {
     const withMessages = error as { shortMessage?: string; message?: string };
-    return withMessages.shortMessage ?? withMessages.message ?? "Une erreur est survenue.";
+    return sanitize(withMessages.shortMessage ?? withMessages.message);
   }
-  return "Une erreur est survenue.";
+  return FALLBACK_MESSAGE;
 }
 
 function parseAmount(raw: string): bigint | undefined {
