@@ -1,0 +1,11 @@
+# OS / editeurs
+.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# Filet de securite : aucun fichier d'environnement ne doit etre commite,
+# ou qu'il se trouve (backend/ et frontend/ ont deja leur propre regle).
+.env
+.env.local
+.env.*.local
